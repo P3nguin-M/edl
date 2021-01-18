@@ -306,7 +306,7 @@ class main(metaclass=LogBase):
                 if mode=="sahara":
                     print("Sahara in error state, resetting ...")
                     saharahdl.cmd_reset()
-                    exit(cdc)
+                    sys.exit(cdc)
             elif "mode" in resp:
                 mode = resp["mode"]
                 if mode == saharahdl.sahara_mode.SAHARA_MODE_MEMORY_DEBUG:
@@ -314,7 +314,7 @@ class main(metaclass=LogBase):
                         time.sleep(0.5)
                         print("Device is in memory dump mode, dumping memory")
                         saharahdl.debug_mode()
-                        exit(cdc)
+                        sys.exit(cdc)
                     else:
                         print("Device is in streaming mode, uploading loader")
                         cdc.timeout = None
@@ -333,7 +333,7 @@ class main(metaclass=LogBase):
                                     time.sleep(0.3)
                                 else:
                                     print("Error, couldn't find suitable enprg/nprg loader :(")
-                                    exit(cdc)
+                                    sys.exit(cdc)
                 else:
                     print("Device is in EDL mode .. continuing.")
                     cdc.timeout = None
@@ -355,19 +355,19 @@ class main(metaclass=LogBase):
                                         mode = "nandprg"
                                     else:
                                         print("Device is in an unknown state")
-                                        exit(cdc)
+                                        sys.exit(cdc)
                                 else:
                                     print("Successfully uploaded programmer :)")
                             else:
                                 print("No suitable loader found :(")
-                                exit(cdc)
+                                sys.exit(cdc)
                     else:
                         print("Device is in an unknown sahara state")
                         print("resp={0}".format(resp))
-                        exit(cdc)
+                        sys.exit(cdc)
             else:
                 print("Device is in an unknown state")
-                exit(cdc)
+                sys.exit(cdc)
         else:
             saharahdl.bit64 = True
 
@@ -390,7 +390,7 @@ class main(metaclass=LogBase):
         else:
             self.__logger.error("Sorry, couldn't talk to Sahara, please reboot the device !")
 
-        exit(cdc)
+        sys.exit(cdc)
 
 
 if __name__ == '__main__':
